@@ -87,7 +87,7 @@ public class ClearInstructionsTests extends BaseTestClass {
             At the beginning of 2022—after a year marked by SpaceX launching thirty-one rockets into orbit, Tesla selling a million cars, and him becoming the richest man on earth—Musk spoke ruefully about his compulsion to stir up dramas. “I need to shift my mindset away from being in crisis mode, which it has been for about fourteen years now, or arguably most of my life,” he said.""";
 
     
-    // Test to give sirections as well as the cookASteak text
+    // Test to give directions as well as the cookASteak text
     @Test
     public void testCookASteak() {
         PromptTemplate promptTemplate = new PromptTemplate(directionsPrompt);
@@ -96,11 +96,20 @@ public class ClearInstructionsTests extends BaseTestClass {
         System.out.println("Response: \n" + response.getResult().getOutput().getText());
     }
 
-    // Test to give sirections as well as the bookDescription text
+    // Test to give directions as well as the bookDescription text
     @Test
     public void testBookDescription() {
         PromptTemplate promptTemplate = new PromptTemplate(directionsPrompt);
         Prompt prompt = promptTemplate.create(Map.of("text_1", bookDescription));
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText());
+    }
+
+    // Create the steak in snoop dog style
+    @Test
+    public void CookSteakLikeSnoopDog() {
+        PromptTemplate promptTemplate = new PromptTemplate(directionsPrompt + "Give directions using the tone of Snoop Dog.");
+        Prompt prompt = promptTemplate.create(Map.of("text_1", cookASteak));
         ChatResponse response = chatModel.call(prompt);
         System.out.println("Response: \n" + response.getResult().getOutput().getText());
     }

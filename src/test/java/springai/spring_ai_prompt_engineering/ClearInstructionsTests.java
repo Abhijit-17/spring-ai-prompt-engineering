@@ -113,4 +113,13 @@ public class ClearInstructionsTests extends BaseTestClass {
         ChatResponse response = chatModel.call(prompt);
         System.out.println("Response: \n" + response.getResult().getOutput().getText());
     }
+
+    // Create the steak in J K Rowlling style
+    @Test
+    public void CookSteakLikeJKRowling() {
+        PromptTemplate promptTemplate = new PromptTemplate(directionsPrompt + "Give the directions using the tone, tools and imagination of JK Rowling in a Harry Potter book");
+        Prompt prompt = promptTemplate.create(Map.of("text_1", cookASteak));
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText());
+    }
 }

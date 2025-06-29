@@ -131,7 +131,7 @@ public class ThinkingInstructionsTests extends BaseTestClass {
         System.out.println("Response: \n" + response);
     }
 
-    String prompt4 = """
+    String puzzlePrompt = """
     You are an expert at solving reasoning problems. A cup is an object with an open top and close on the sides and bottom. The open top does not prevent objects from passing through it.
     
     Assume the laws of physics on Earth. A small marble is put into a normal cup and the cup is placed upside down on a table,
@@ -139,5 +139,13 @@ public class ThinkingInstructionsTests extends BaseTestClass {
     Someone then picks the cup up without changing its orientation and puts it inside the microwave. Where is the ball now. Determine the position of the ball in each step. Explain 
     why the ball is postioned where it is.
     """;
+
+    @Test
+    void testPuzzlePrompt() {
+        PromptTemplate promptTemplate = new PromptTemplate(puzzlePrompt);
+        Prompt prompt = promptTemplate.create();
+        String response = chatModel.call(prompt).getResult().getOutput().getText();
+        System.out.println("Response: \n" + response);
+    }
         
 }

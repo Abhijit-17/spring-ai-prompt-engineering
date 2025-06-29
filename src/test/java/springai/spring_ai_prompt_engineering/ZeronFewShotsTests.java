@@ -9,6 +9,7 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.model.openai.autoconfigure.OpenAiChatProperties;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -49,6 +50,23 @@ public class ZeronFewShotsTests extends BaseTestClass{
         }
     }
 
-    
+    @DisplayName("Zero Shot Test with Chat Properties")
+    @Test
+    public void zeroShotTestWithChatProperties() {
+        OpenAiChatOptions chatOptions = new OpenAiChatOptions.Builder(openAiChatProperties.getOptions())
+                .temperature(0.1) // default is 0.7
+                .model("gpt-4-turbo") // default is gpt-3.5-turbo
+                .build();
+        // java loop 3 times
+        for (int i = 0; i < 3; i++) {
+            PromptTemplate promptTemplate = new PromptTemplate(prompt);
+            Prompt prompt = promptTemplate.create(Map.of("review", UUID.randomUUID() + review), chatOptions);
+            ChatResponse response = chatModel.call(prompt);
+            System.out.println("##############################################");
+            System.out.println("Zero Shot Response with Chat Properties: " + response.getResult().getOutput().getText() + "\n");
+        }
+    }
+
+
 
 }

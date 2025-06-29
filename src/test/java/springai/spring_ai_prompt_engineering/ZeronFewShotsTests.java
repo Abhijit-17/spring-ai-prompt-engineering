@@ -108,7 +108,22 @@ public class ZeronFewShotsTests extends BaseTestClass{
         System.out.println("Response: \n" + response.getResult().getOutput().getText());
     }
 
-    
+    String mathPrompt = """
+        2+2 = two two
+        3+3 = three three
+        4+5 = four five
+        
+        What is 5+7?
+        """;
+
+    @DisplayName("Few Shot Math Test")
+    @Test
+    public void fewShotMathTest() {
+        PromptTemplate promptTemplate = new PromptTemplate(mathPrompt);
+        Prompt prompt = promptTemplate.create();
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText());
+    }
 
 
 

@@ -89,4 +89,26 @@ public class SummarisingPromptsTest extends BaseTestClass {
         String response = chatModel.call(prompt).getResult().getOutput().getText();
         System.out.println("Response: \n" + response);
     }
+
+    String reviewPrompt4 = """
+        Your task is to extract a summary for a book from reviews. The summary will be used for a
+        web page selling the book. You will be given 3 reviews. Create the summary based on the reviews and
+        include information in the summary from all 3 reviews.
+
+        Summarize the reviews below, delimited by triple backticks, in at most 200 words.
+    
+        Review: ```{review}```
+        
+        Review 2: ```{review2}```
+        
+        Review 3: ```{review3}```
+    """;
+
+    @Test
+    void testBookReviewSummarization4() {
+        PromptTemplate promptTemplate = new PromptTemplate(reviewPrompt4);
+        Prompt prompt = promptTemplate.create(Map.of("review", review1, "review2", review2, "review3", review3));
+        String response = chatModel.call(prompt).getResult().getOutput().getText();
+        System.out.println("Response: \n" + response);
+    }
 }

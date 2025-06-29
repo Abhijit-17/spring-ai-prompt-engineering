@@ -68,5 +68,48 @@ public class ZeronFewShotsTests extends BaseTestClass{
     }
 
 
+    /**
+     * Few shot - send the model a few examples to help it understand the context of the prompt.
+     *
+     * Example from 'Language Models are Few-Shot Learners' paper: https://arxiv.org/abs/2005.14165
+     */
+
+    String whatpuPrompt = """
+        A "whatpu" is a small, furry animal native to Tanzania. An example of a sentence that uses
+        the word whatpu is:
+        \s
+        We were traveling in Africa and we saw these very cute whatpus.
+        \s
+        To do a "farduddle" means to jump up and down really fast. An example of a sentence that uses
+                the word farduddle is:
+    \s""";
+
+    @DisplayName("Few Shot whatpu Test")
+    @Test
+    public void fewShotWhatpuTest() {
+        PromptTemplate promptTemplate = new PromptTemplate(whatpuPrompt);
+        Prompt prompt = promptTemplate.create();
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText());
+    }
+
+    String vacationPrompt = """
+        John likes white sand beaches and warm weather.
+        
+        What are 5 locations John should consider for vacation?
+        """;
+
+    @DisplayName("Few Shot Vacation Test")
+    @Test
+    public void fewShotVacationTest() {
+        PromptTemplate promptTemplate = new PromptTemplate(vacationPrompt);
+        Prompt prompt = promptTemplate.create();
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText());
+    }
+
+    
+
+
 
 }

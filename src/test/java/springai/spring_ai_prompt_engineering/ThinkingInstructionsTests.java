@@ -41,4 +41,103 @@ public class ThinkingInstructionsTests extends BaseTestClass {
         String response = chatModel.call(prompt).getResult().getOutput().getText();
         System.out.println("Response: \n" + response);
     }
+
+
+    String prompt2Incorrect = """
+        Determine if the student's solution is correct or not.
+                    
+        Question:
+        I'm building a solar power installation and I need
+            help working out the financials.
+        - Land costs $100 / square foot
+        - I can buy solar panels for $250 / square foot
+        - I negotiated a contract for maintenance that will cost 
+        me a flat $100k per year, and an additional $10 / square foot
+        
+        What is the total cost for the first year of operations
+        as a function of the number of square feet.
+                    
+        Student's Solution:
+        Let x be the size of the installation in square feet.
+        Costs:
+        1. Land cost: 100x
+        2. Solar panel cost: 250x
+        3. Maintenance cost: 100,000 + 100x
+        Total cost: 100x + 250x + 100,000 + 100x = 450x + 100,000
+        """;
+    
+    @Test
+    void testIncorrectSolutionPrompt() {
+        PromptTemplate promptTemplate = new PromptTemplate(prompt2Incorrect);
+        Prompt prompt = promptTemplate.create();
+        String response = chatModel.call(prompt).getResult().getOutput().getText();
+        System.out.println("Response: \n" + response);
+    }
+
+    String prompt3Correct = """
+        Your task is to determine if the student's solution is correct or not.
+        To solve the problem do the following:
+        - First, work out your own solution to the problem including the final total.
+        - Then compare your solution to the student's solution and evaluate if the student's solution is correct or not.
+        
+        Don't decide if the student's solution is correct until you have done the problem yourself.
+                    
+        Use the following format:
+        Question:
+        ```question here```
+        
+        Student's solution:
+        ```student's solution here```
+        
+        Actual solution:
+        ```steps to work out the solution and your solution here```
+        
+        Is the student's solution the same as actual solution just calculated:
+        ```yes or no```
+        
+        Student grade:
+        ```correct or incorrect```
+                    
+        Question:
+        ```
+        I'm building a solar power installation and I need help working out the financials.
+        - Land costs $100 / square foot
+        - I can buy solar panels for $250 / square foot
+        - I negotiated a contract for maintenance that will cost me a flat $100k per year, and an additional $10 / square foot
+        
+        What is the total cost for the first year of operations as a function of the number of square feet.
+        ```
+        
+        Student's solution:
+        ```
+        Let x be the size of the installation in square feet.
+        Costs:
+        1. Land cost: 100x
+        2. Solar panel cost: 250x
+        3. Maintenance cost: 100,000 + 100x
+        Total cost: 100x + 250x + 100,000 + 100x = 450x + 100,000
+        ```
+        
+        Actual solution:
+        ```actual solution here```
+        
+        """;
+    
+    @Test
+    void testCorrectSolutionPrompt() {
+        PromptTemplate promptTemplate = new PromptTemplate(prompt3Correct);
+        Prompt prompt = promptTemplate.create();
+        String response = chatModel.call(prompt).getResult().getOutput().getText();
+        System.out.println("Response: \n" + response);
+    }
+
+    String prompt4 = """
+    You are an expert at solving reasoning problems. A cup is an object with an open top and close on the sides and bottom. The open top does not prevent objects from passing through it.
+    
+    Assume the laws of physics on Earth. A small marble is put into a normal cup and the cup is placed upside down on a table,
+    causing the open side of the cup to be in contact with the table. Gravity will cause the ball to fall to the table.
+    Someone then picks the cup up without changing its orientation and puts it inside the microwave. Where is the ball now. Determine the position of the ball in each step. Explain 
+    why the ball is postioned where it is.
+    """;
+        
 }

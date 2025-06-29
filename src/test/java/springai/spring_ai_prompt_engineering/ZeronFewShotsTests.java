@@ -125,6 +125,16 @@ public class ZeronFewShotsTests extends BaseTestClass{
         System.out.println("Response: \n" + response.getResult().getOutput().getText());
     }
 
+    @DisplayName("AI hallucination Test")
+    @Test
+    public void aiHallucinationTest() {
+        Prompt prompt = new Prompt("\"Write sales copy for the new 'professional grade' \" +\n" + //
+                        "\"Denali Advanced Toothbrush by GMC.\"");
+        ChatResponse response = chatModel.call(prompt);
+        System.out.println("Response: \n" + response.getResult().getOutput().getText() + "\n");
+        // Note: This is an example of AI hallucination, where
+    }
+
 
 
 }
